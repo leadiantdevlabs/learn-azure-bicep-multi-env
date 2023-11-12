@@ -1,0 +1,16 @@
+name: lint
+
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    name: Lint code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Lint Code
+        run: |
+          az bicep build --file infra/bicep/main.yaml
+
