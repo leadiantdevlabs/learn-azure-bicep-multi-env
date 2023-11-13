@@ -1,14 +1,16 @@
 name: workflow
 on:
   workflow_dispatch:
+  
 permissions:
   id-token: write
   contents: read
 jobs:
   lint:
-    uses: leadiantdevlabs/learn-azure-bicep-multi-env/.github/workflows/lint.yaml
+    uses: ./.github/workflows/lint.yaml
+
   deploy-test:
-    uses: leadiantdevlabs/learn-azure-bicep-multi-env/.github/workflows/deploy.yaml
+    uses: ./.github/workflows/deploy.yaml
     needs: lint
     with:
       environmentType: Test
@@ -20,7 +22,7 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       reviewApiKey: ${{ secrets.REVIEW_API_KEY_TEST }}
   deploy-production:
-    uses: leadiantdevlabs/learn-azure-bicep-multi-env/.github/workflows/deploy.yaml
+    uses: ./.github/workflows/deploy.yaml
     needs: deploy-test
     with:
       environmentType: Production
