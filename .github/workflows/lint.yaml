@@ -12,5 +12,5 @@ jobs:
 
       - name: Lint Code
         run: |
-          az bicep build --file infra/bicep/main.yaml
+          az bicep build --file infra/bicep/main.bicep
 
