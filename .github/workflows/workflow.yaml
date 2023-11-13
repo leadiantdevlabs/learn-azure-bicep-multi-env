@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/lint.yaml
   
   deploy-test:
-    uses: ./.github/workflows/lint.yaml
+    uses: ./.github/workflows/deploy.yaml
     needs: lint
     with:
       environmentType: Test
@@ -23,7 +23,7 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   
   deploy-production:
-    uses: ./.github/workflows/lint.yaml
+    uses: ./.github/workflows/deploy.yaml
     needs: deploy-test
     with:
       environmentType: Production
