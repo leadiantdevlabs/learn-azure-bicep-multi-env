@@ -9,12 +9,17 @@ on:
       resourceGroupName:
         required: true
         type: string
+      reviewApiUrl:
+        required: true
+        type: string
     secrets:
       AZURE_CLIENT_ID:
         required: true
       AZURE_TENANT_ID:
         required: true
       AZURE_SUBSCRIPTION_ID:
+        required: true
+      reviewApiKey:
         required: true
       
 permissions:
@@ -39,8 +44,7 @@ jobs:
           deploymentName: ${{ github.run_number }}
           resourceGroupName: ${{ inputs.resourceGroupName }}
           template: ./infra/bicep/main.bicep
-          parameters: |
-            environmentType=${{ inputs.environmentType }}
+          parameters: environmentType=${{ inputs.environmentType }} reviewApiUrl=${{ inputs.reviewApiUrl }} reviewApiKey=${{ secrets.reviewApiKey }}
           deploymentType: validate
       - if: inputs.environmentType == 'Production'
         name: Run what-if
@@ -74,5 +78,4 @@ jobs:
           deploymentName: ${{ github.run_number }}
           resourceGroupName: ${{ inputs.resourceGroupName }}
           template: ./infra/bicep/main.bicep
-          parameters: |
-            environmentType=${{ inputs.environmentType }}
+          parameters: environmentType=${{ inputs.environmentType }} reviewApiUrl=${{ inputs.reviewApiUrl }} reviewApiKey=${{ secrets.reviewApiKey }}
